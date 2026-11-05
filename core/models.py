@@ -15,5 +15,5 @@ class LugarPatrimonial(models.Model):
     descripcion = models.CharField(max_length=500)
     ubicacion = models.CharField(max_length=100)
     anio_construccion = models.IntegerField()
-    imagen = models.ImageField()
+    imagen = models.URLField(max_length=500)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)  #Clave foránea a Categoria

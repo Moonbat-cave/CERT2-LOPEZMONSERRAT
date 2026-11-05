@@ -37,3 +37,13 @@ body {
 .espacio-izq {
     padding-right: 10px;
 }
+
+section {
+    padding: 20px;
+}
+
+.img-carrusel {
+    height: 60vh;
+    object-fit: cover;
+    background-color: #000;
+}

@@ -23,7 +23,6 @@
                     <a class="nav-link texto-blanco" aria-current="page" href="/">Principal</a>
                     <a class="nav-link texto-blanco" href="{% url 'catalogo' %}">Catálogo</a>
                     {% if request.user.is_authenticated %}
-                    <a class="nav-link texto-blanco" href="{% url 'cuentaConfig' %}">Configurar cuenta</a>
                         {% if request.user.is_superuser %}
                         <a class="nav-link texto-blanco" href="{% url 'gestion' %}">Gestion página</a>
                         {% endif %}
@@ -116,6 +115,90 @@
             </div>
         </div>
     </div>
+    <!--Modal agregar Patrimonio-->
+    <div class="modal fade" id="registroPatrimonio" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content transparencia texto-blanco border-white border-3">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar patrimonio</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'crear_lugar' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="codeP" class="col-form-label">codigo (Max 3 digitos)</label>
+                    <input type="text" maxlength="3" class="form-control" id="codeP" name="codeP" required>
+                </div>
+                <div class="mb-3">
+                    <label for="nombreP" class="col-form-label">Nombre patrimonio</label>
+                    <input type="text" maxlength="30" class="form-control" id="nombreP" name="nombreP" required>
+                </div>
+                <div class="mb-3">
+                    <label for="ubicacionP" class="col-form-label">Ubicacion</label>
+                    <input type="text" maxlength="100" class="form-control" id="ubicacionP" name="ubicacionP" required>
+                </div>
+                <div class="mb-3">
+                    <label for="anioConstruccion" class="col-form-label">Año de construcción</label>
+                    <input type="number" max="2100" class="form-control" id="anioConstruccion" name="anioConstruccion" required>
+                </div>
+                <div class="mb-3">
+                    <label for="descripcionP" class="col-form-label">Descripcion</label>
+                    <textarea class="form-control" maxlength="500" id="descripcionP" name="descripcionP" required></textarea>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" for="imagenP" id="basic-addon3">URL imagen</span>
+                    <input type="text" class="form-control" maxlength="500" id="imagenP" name="imagenP" aria-describedby="basic-addon3 basic-addon4" required>
+                </div>
+                <div class="col-12 mb-3">
+                    <label class="visually-hidden" for="Categoria">Preference</label>
+                    <select class="form-select" id="Categoria" name="Categoria" required>
+                        {% for categoria in categorias %}
+                        <option value="{{ categoria.cod }}">{{ categoria.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                    <button type="submit" class="btn btn-light mt-2">Registrar</button>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal Agregar Cetegoría-->
+    <div class="modal fade" id="registroCategoria" tabindex="-1" aria-labelledby="modalCatLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content transparencia texto-blanco border-white border-3">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalCatLabel">Registrar Categoría</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Apuntamos la acción a la URL que creamos -->
+                <form method="POST" action="{% url 'crear_categoria' %}">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="codeCat" class="col-form-label">Código (Max 3 dígitos)</label>
+                        <input type="text" maxlength="3" class="form-control" id="codeCat" name="codeCat" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="nombreCat" class="col-form-label">Nombre de la categoría</label>
+                        <input type="text" maxlength="30" class="form-control" id="nombreCat" name="nombreCat" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="descripcionCat" class="col-form-label">Descripción</label>
+                        <textarea class="form-control" maxlength="250" id="descripcionCat" name="descripcionCat" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-light mt-2">Registrar Categoría</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
     {% block content %}{% endblock %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>

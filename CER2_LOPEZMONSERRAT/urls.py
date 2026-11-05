@@ -26,7 +26,12 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='core/principal.html'), name='login'), #Inicio de sesión
     path('logout/', auth_views.LogoutView.as_view(), name='logout'), # Cerrar sesión
     path("detalle/", views.detalle, name="detalle"), # Ver detalle patrimonio.
-    path("cuentaConfig/", views.cuentaConfig), # Ver configuración cuenta.
     path("register/", views.registrar, name="register"), # Registrarse.
-    path("gestion/", views.gestion, name="gestion") # Sitio gestión de la página.
+    path("gestion/", views.gestion, name="gestion"), # Sitio gestión de la página.
+    path("lugar/", views.crear_lugar, name="crear_lugar"),
+    path("categoria/", views.crear_categoria, name="crear_categoria"),
+    path('lugar/modificar/<str:cod>/', views.modificar_lugar, name='modificar_lugar'),
+    path('lugar/eliminar/<str:cod>/', views.eliminar_lugar, name='eliminar_lugar'),
+    path('categoria/modificar/<str:cod>/', views.modificar_categoria, name='modificar_categoria'),
+    path('categoria/eliminar/<str:cod>/', views.eliminar_categoria, name='eliminar_categoria'),
 ]

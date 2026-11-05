@@ -1,6 +1,73 @@
-{% extends "core/base.html" %}
-{% block title %}Catalogo de patrimonios{% endblock %}
+{% extends 'core/base.html' %}
+
+{% block title %}Catálogo de Patrimonios{% endblock %}
 
 {% block content %}
+<div class="container my-5">
+    <h2 class="text-white text-center mb-4">Catálogo de Lugares Patrimoniales</h2>
     
+    <div class="d-flex justify-content-center flex-wrap gap-2 mb-5">
+        <!-- Botón para ver todos -->
+        <a href="{% url 'catalogo' %}" class="btn btn-light">
+            Todos
+        </a>
+
+        {% for cat in categorias %}
+        <a href="{% url 'catalogo' %}?categoria={{ cat.cod }}" class="btn btn-light">
+            {{ cat.nombre }}
+        </a>
+        {% endfor %}
+    </div>
+    
+    <div class="row row-cols-md-2 g-4">
+        {% for lugar in lugares %}
+        <div class="col">
+            <div class="card transparencia w-100 d-flex texto-blanco border-white border-3 h-100">
+                
+                {% if lugar.imagen %}
+                <img src="{{ lugar.imagen }}" class="d-block w-100 img-carrusel" alt="{{ lugar.nombre }}" style="height: 250px; object-fit: cover;">
+                {% endif %}
+                
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ lugar.nombre }}</h5>
+                    <p class="card-text">
+                        <strong>Ubicación:</strong> {{ lugar.ubicacion }}
+                    </p>
+                    
+                    <!-- Botón para abrir el modal específico de este lugar -->
+                    <button type="button" class="btn btn-light mt-auto" data-bs-toggle="modal" data-bs-target="#modalDetalle{{ lugar.cod }}">
+                        Mostrar más info
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalDetalle{{ lugar.cod }}" tabindex="-1" aria-labelledby="modalLabel{{ lugar.cod }}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content transparencia texto-blanco border-white border-3">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalLabel{{ lugar.cod }}">{{ lugar.nombre }}</h1>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>Código:</strong> {{ lugar.cod }}</p>
+                        <p><strong>Categoría:</strong> {{ lugar.categoria.nombre }}</p>
+                        <p><strong>Ubicación:</strong> {{ lugar.ubicacion }}</p>
+                        <p><strong>Año de construcción:</strong> {{ lugar.anio_construccion }}</p>
+                        <p><strong>Descripción:</strong></p>
+                        <p class="text-light">{{ lugar.descripcion }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-white text-center">No hay lugares patrimoniales registrados en esta categoría.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
