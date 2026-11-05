@@ -16,12 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth import views as auth_views # Obtener la forma automática de conectar el inicio de sesión con la BD.
 from core import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("", views.principal),
-    path("catalogo/", views.catalogo),
-    path("login/", views.login),
-    path("detalle/", views.detalle)
+    path('admin/', admin.site.urls), #Sitio admin
+    path("", views.principal), #Sitio principal
+    path("catalogo/", views.catalogo, name="catalogo"), # Sitio Catálogo
+    path('login/', auth_views.LoginView.as_view(template_name='core/principal.html'), name='login'), #Inicio de sesión
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'), # Cerrar sesión
+    path("detalle/", views.detalle, name="detalle"), # Ver detalle patrimonio.
+    path("cuentaConfig/", views.cuentaConfig), # Ver configuración cuenta.
+    path("register/", views.registrar, name="register"), # Registrarse.
+    path("gestion/", views.gestion, name="gestion") # Sitio gestión de la página.
 ]
